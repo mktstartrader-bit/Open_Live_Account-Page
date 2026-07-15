@@ -474,6 +474,11 @@ i { color: var(--royal); font-style: normal; font-weight: inherit; }
   .faq { position: static; }
   .entity { grid-template-columns: 1fr 1fr; }
   .card { padding: 22px 18px 24px; }
+
+  /* slide 3: stack the license pills at a uniform width */
+  .licenses { gap: 12px; padding: 22px 16px; }
+  .licenses .lic-row { flex-direction: column; align-items: center; width: 100%; gap: 12px; }
+  .lic { width: 100%; max-width: 300px; justify-content: flex-start; font-size: 13.5px; }
 }
 
 /* ---- Small phones ---- */

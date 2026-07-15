@@ -93,8 +93,10 @@
   var track  = $('.track');
   var slides = $$('.slide');
   if (dots.length && track) {
-    var current = 0, timer = null;
-    var AUTO = 6000;
+    var current = 0, timer = null, resumeT = null;
+    var AUTO = 5000;      /* advance every 5 seconds */
+    var RESUME = 8000;    /* after interacting, resume once idle this long */
+
     function show(i) {
       current = (i + dots.length) % dots.length;
       track.style.setProperty('--i', current);
@@ -105,23 +107,29 @@
       });
       slides.forEach(function (s, n) { s.classList.toggle('is-active', n === current); });
     }
-    function start() { if (reduceMotion) return; stop(); timer = setInterval(function () { show(current + 1); }, AUTO); }
+    function play() { if (reduceMotion) return; stop(); timer = setInterval(function () { show(current + 1); }, AUTO); }
     function stop() { if (timer) { clearInterval(timer); timer = null; } }
+    /* stop now; resume automatically once the visitor has been idle a while */
+    function pauseIdle() { stop(); clearTimeout(resumeT); resumeT = setTimeout(play, RESUME); }
 
     dots.forEach(function (d, n) {
-      d.addEventListener('click', function () { show(n); start(); });
+      d.addEventListener('click', function () { show(n); pauseIdle(); });
       d.addEventListener('focus', function () { show(n); });
     });
-    // pause auto-advance while the visitor is engaging with the panel
-    [$('.slides'), $('.carousel')].forEach(function (el) {
-      if (!el) return;
-      el.addEventListener('mouseenter', stop);
-      el.addEventListener('mouseleave', start);
-    });
+
+    // click / tap anywhere on the blue panel stops the slider (resumes when idle)
+    var panel = $('.left');
+    if (panel) panel.addEventListener('pointerdown', pauseIdle);
+    // desktop nicety: pause while reading the slide content, resume on leave
+    var slidesEl = $('.slides');
+    if (slidesEl) {
+      slidesEl.addEventListener('mouseenter', stop);
+      slidesEl.addEventListener('mouseleave', function () { clearTimeout(resumeT); play(); });
+    }
 
     var forced = new URLSearchParams(location.search).get('s');
     if (forced !== null) { show(parseInt(forced, 10) || 0); }
-    else { show(0); start(); }
+    else { show(0); play(); }
   }
 
   /* ---------- stats: white highlight slides to the hovered row ---------- */
