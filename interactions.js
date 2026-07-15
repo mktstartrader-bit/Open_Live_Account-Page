@@ -88,26 +88,40 @@
     });
   });
 
-  /* ---------- carousel: the white bar glides to whichever point you
-     hover (or click / focus) and stays there. ---------- */
-  var dots = $$('.cdot');
-  if (dots.length) {
-    var current = 0;
-    function render(active) {
-      current = active;
+  /* ---------- carousel: dots switch the brand-panel slides ---------- */
+  var dots   = $$('.cdot');
+  var track  = $('.track');
+  var slides = $$('.slide');
+  if (dots.length && track) {
+    var current = 0, timer = null;
+    var AUTO = 6000;
+    function show(i) {
+      current = (i + dots.length) % dots.length;
+      track.style.setProperty('--i', current);
       dots.forEach(function (d, n) {
-        var on = n === active;
+        var on = n === current;
         d.classList.toggle('is-active', on);
         d.setAttribute('aria-selected', String(on));
       });
+      slides.forEach(function (s, n) { s.classList.toggle('is-active', n === current); });
     }
+    function start() { if (reduceMotion) return; stop(); timer = setInterval(function () { show(current + 1); }, AUTO); }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+
     dots.forEach(function (d, n) {
-      var go = function () { render(n); };
-      d.addEventListener('mouseenter', go);
-      d.addEventListener('click', go);
-      d.addEventListener('focus', go);
+      d.addEventListener('click', function () { show(n); start(); });
+      d.addEventListener('focus', function () { show(n); });
     });
-    render(0);
+    // pause auto-advance while the visitor is engaging with the panel
+    [$('.slides'), $('.carousel')].forEach(function (el) {
+      if (!el) return;
+      el.addEventListener('mouseenter', stop);
+      el.addEventListener('mouseleave', start);
+    });
+
+    var forced = new URLSearchParams(location.search).get('s');
+    if (forced !== null) { show(parseInt(forced, 10) || 0); }
+    else { show(0); start(); }
   }
 
   /* ---------- stats: white highlight slides to the hovered row ---------- */

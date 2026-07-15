@@ -68,7 +68,8 @@
   100% { opacity: 1; transform: rotate(45deg) scale(1); }
 }
 
-/* ---------- 5. carousel dots — the white bar glides between points ---------- */
+/* ---------- 5. carousel: sliding track + dots ---------- */
+.track { transition: transform .6s var(--ease-out); }
 .cdot::before { transition: width .5s var(--ease-spring), background .35s var(--ease-out); }
 .cdot:not(.is-active):hover::before { background: rgba(255, 255, 255, 0.9); width: 8px; }
 

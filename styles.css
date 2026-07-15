@@ -77,6 +77,7 @@ i { color: var(--royal); font-style: normal; font-weight: inherit; }
 .left__mid {
   flex: 1;
   min-height: 0;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -141,6 +142,107 @@ i { color: var(--royal); font-style: normal; font-weight: inherit; }
 .stat.is-hl .stat__body h3 { color: var(--charcoal); }
 .stat.is-hl .stat__body h3 b.accent { color: var(--royal); }
 .stat.is-hl .stat__body p { color: rgba(28, 31, 42, 0.7); }
+
+/* ==================== CAROUSEL SLIDES ==================== */
+.slides { width: 100%; min-width: 0; overflow: hidden; }
+.track {
+  display: flex;
+  transform: translateX(calc(var(--i, 0) * -100%));
+}
+.slide {
+  flex: 0 0 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.glass {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: var(--card-radius);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+}
+
+/* --- slide 2 · app --- */
+.appviz { position: relative; height: 348px; overflow: hidden; }
+.appviz__phone {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center 42%;
+  pointer-events: none;
+}
+.ticker {
+  position: absolute;
+  width: 37%;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.74);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 14px;
+  box-shadow: 0 3px 34px 7px rgba(218, 227, 237, 0.22);
+}
+.ticker--a { left: 3%;  top: 14%; }
+.ticker--b { left: 58%; top: 45%; }
+.tk__head { display: flex; align-items: center; gap: 8px; }
+.tk__ico {
+  flex: 0 0 22px; width: 22px; height: 22px;
+  display: grid; place-items: center;
+  background: #fff; border-radius: 50%; overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+.tk__ico img { width: 72%; height: 72%; object-fit: contain; }
+.tk__ico--sp { font-size: 7px; font-weight: 800; color: #000; }
+.tk__name { font-size: 12px; color: var(--charcoal); }
+.tk__vals { display: flex; align-items: center; gap: 8px; margin-top: 3px; }
+.tk__price { font-size: 10px; font-weight: 500; color: var(--royal); }
+.tk__chg { font-size: 10px; }
+.tk__chg.up { color: #008d34; }
+.tk__chg.down { color: #d5111f; }
+.tk__div { display: block; height: 0; border-top: 1px dashed rgba(28, 31, 42, 0.18); margin: 9px 0; }
+
+/* --- slide 3 · licenses --- */
+.licenses {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 15px; padding: 26px 20px;
+}
+.lic-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
+.lic {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 9px 16px; border-radius: 60px;
+  background: #fff; color: #000; font-size: 14px; white-space: nowrap;
+  box-shadow: 0 2px 14px rgba(13, 13, 75, 0.08);
+}
+.lic img { flex: 0 0 28px; width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
+.lic b { color: var(--royal); font-weight: 500; }
+
+/* --- slide 4 · awards --- */
+.awards {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 9px; padding: 16px; overflow: hidden;
+}
+.award {
+  display: flex; align-items: center; justify-content: center; gap: 2px;
+  min-width: 0; padding: 8px 3px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid #fff; border-radius: 13px;
+  box-shadow: 0 3px 30px 6px rgba(218, 227, 237, 0.2);
+}
+/* the laurel SVG uses preserveAspectRatio="none", so BOTH dims must be fixed */
+.award__laurel { flex: 0 0 18px; width: 18px; height: 34px; }
+.award__laurel--l { transform: scaleX(-1); }
+.award__txt {
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center; gap: 3px; min-width: 0;
+}
+.award__title {
+  font-size: 8px; font-weight: 600; line-height: 1.28;
+  color: #0d0d4b; text-transform: uppercase; letter-spacing: .02em;
+}
+.award__sub {
+  font-size: 6px; font-weight: 600; line-height: 1.2;
+  color: var(--royal); text-transform: uppercase;
+}
 
 /* --- bottom: carousel + faq --- */
 .left__bot {

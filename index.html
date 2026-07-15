@@ -28,12 +28,17 @@
           </div>
         </header>
 
-        <!-- middle: numbers -->
+        <!-- middle: carousel slides -->
         <div class="left__mid">
-          <h2 class="lead" data-reveal style="--d:.30s">Get know us in numbers</h2>
-          <p class="lead__sub" data-reveal style="--d:.38s">With unique offerings, you ensure your trading journey is seamless &amp; rewarding.</p>
+         <div class="slides" data-reveal style="--d:.30s" aria-live="polite">
+          <div class="track">
 
-          <div class="stats" data-reveal style="--d:.48s">
+           <!-- Slide 1 · Numbers -->
+           <section class="slide is-active" aria-label="Get to know us in numbers">
+            <h2 class="lead">Get know us in numbers</h2>
+            <p class="lead__sub">With unique offerings, you ensure your trading journey is seamless &amp; rewarding.</p>
+
+            <div class="stats glass">
             <span class="stats__hl" aria-hidden="true"></span>
 
             <div class="stat">
@@ -59,8 +64,79 @@
                 <p>Enjoy ultra-tight spread on ECN account.</p>
               </div>
             </div>
-          </div>
-        </div>
+            </div><!-- /stats -->
+           </section>
+
+           <!-- Slide 2 · App -->
+           <section class="slide" aria-label="Premium trading app">
+            <h2 class="lead">Premium App — Trade anywhere</h2>
+            <p class="lead__sub">Trade with STARTRADER's advanced trading app and ascend to new heights in the financial universe.</p>
+            <div class="glass appviz">
+              <img class="appviz__phone" src="Assets/slides/phone.png" alt="STARTRADER trading app" />
+              <div class="ticker ticker--a">
+                <div class="tk">
+                  <span class="tk__head"><span class="tk__ico"><img src="Assets/slides/gold.png" alt="" /></span><span class="tk__name">Gold</span></span>
+                  <span class="tk__vals"><span class="tk__price">16.00</span><span class="tk__chg up">+0.25(+1.59%)</span></span>
+                </div>
+                <span class="tk__div"></span>
+                <div class="tk">
+                  <span class="tk__head"><span class="tk__ico tk__ico--sp">S&amp;P</span><span class="tk__name">S &amp; P 500</span></span>
+                  <span class="tk__vals"><span class="tk__price">16.00</span><span class="tk__chg down">+0.25(+1.59%)</span></span>
+                </div>
+              </div>
+              <div class="ticker ticker--b">
+                <div class="tk">
+                  <span class="tk__head"><span class="tk__ico"><img src="Assets/slides/coin.png" alt="" /></span><span class="tk__name">Dollar</span></span>
+                  <span class="tk__vals"><span class="tk__price">16.00</span><span class="tk__chg up">+0.25(+1.59%)</span></span>
+                </div>
+                <span class="tk__div"></span>
+                <div class="tk">
+                  <span class="tk__head"><span class="tk__ico"><img src="Assets/slides/apple.png" alt="" /></span><span class="tk__name">Apple</span></span>
+                  <span class="tk__vals"><span class="tk__price">16.00</span><span class="tk__chg down">+0.25(+1.59%)</span></span>
+                </div>
+              </div>
+            </div>
+           </section>
+
+           <!-- Slide 3 · Licenses -->
+           <section class="slide" aria-label="Global licenses">
+            <h2 class="lead">Supported by 5 Global Licenses,</h2>
+            <p class="lead__sub">Empowering reliable trading</p>
+            <div class="glass licenses">
+              <div class="lic-row">
+                <span class="lic"><img src="Assets/slides/flag-za.png" alt="" /><b>FSCA</b>&nbsp;(South Africa)</span>
+                <span class="lic"><img src="Assets/slides/flag-au.png" alt="" /><b>ASIC</b>&nbsp;(Australia)</span>
+              </div>
+              <div class="lic-row">
+                <span class="lic"><img src="Assets/slides/flag-ae.png" alt="" /><b>CMA</b>&nbsp;(United Arab Emirates)</span>
+              </div>
+              <div class="lic-row">
+                <span class="lic"><img src="Assets/slides/flag-mu.png" alt="" /><b>FSC</b>&nbsp;(Mauritius)</span>
+                <span class="lic"><img src="Assets/slides/flag-sc.png" alt="" /><b>FSA</b>&nbsp;(Seychelles)</span>
+              </div>
+            </div>
+           </section>
+
+           <!-- Slide 4 · Awards -->
+           <section class="slide" aria-label="Our awards">
+            <h2 class="lead">Our Awards Speak</h2>
+            <p class="lead__sub">Volumes of your trust</p>
+            <div class="glass awards">
+              <div class="award"><img class="award__laurel award__laurel--l" src="Assets/slides/laurel.svg" alt="" /><span class="award__txt"><span class="award__title">Affiliate Brand of the Year</span><span class="award__sub">Dubai Affiliate Summit 2025</span></span><img class="award__laurel" src="Assets/slides/laurel.svg" alt="" /></div>
+              <div class="award"><img class="award__laurel award__laurel--l" src="Assets/slides/laurel.svg" alt="" /><span class="award__txt"><span class="award__title">Most Reputable Forex Broker</span><span class="award__sub">Forex Expo Dubai 2025</span></span><img class="award__laurel" src="Assets/slides/laurel.svg" alt="" /></div>
+              <div class="award"><img class="award__laurel award__laurel--l" src="Assets/slides/laurel.svg" alt="" /><span class="award__txt"><span class="award__title">Best Forex Trade Execution</span><span class="award__sub">Wiki Finance Expo Cyprus 2025</span></span><img class="award__laurel" src="Assets/slides/laurel.svg" alt="" /></div>
+              <div class="award"><img class="award__laurel award__laurel--l" src="Assets/slides/laurel.svg" alt="" /><span class="award__txt"><span class="award__title">Top 100 Financial Services Award</span><span class="award__sub">The Middle East Financial Markets (MEFM) Awards Dubai 2025</span></span><img class="award__laurel" src="Assets/slides/laurel.svg" alt="" /></div>
+              <div class="award"><img class="award__laurel award__laurel--l" src="Assets/slides/laurel.svg" alt="" /><span class="award__txt"><span class="award__title">Global Forex Trading App of the Year</span><span class="award__sub">Smart Vision Summit – Bahrain 2025</span></span><img class="award__laurel" src="Assets/slides/laurel.svg" alt="" /></div>
+              <div class="award"><img class="award__laurel award__laurel--l" src="Assets/slides/laurel.svg" alt="" /><span class="award__txt"><span class="award__title">Most Innovative Broker</span><span class="award__sub">Cripto Latin Fest 2025 – Colombia</span></span><img class="award__laurel" src="Assets/slides/laurel.svg" alt="" /></div>
+              <div class="award"><img class="award__laurel award__laurel--l" src="Assets/slides/laurel.svg" alt="" /><span class="award__txt"><span class="award__title">Best Trading Conditions</span><span class="award__sub">Money Expo Chile 2025</span></span><img class="award__laurel" src="Assets/slides/laurel.svg" alt="" /></div>
+              <div class="award"><img class="award__laurel award__laurel--l" src="Assets/slides/laurel.svg" alt="" /><span class="award__txt"><span class="award__title">Best Trading App 2025</span><span class="award__sub">Money Expo Colombia 2025</span></span><img class="award__laurel" src="Assets/slides/laurel.svg" alt="" /></div>
+              <div class="award"><img class="award__laurel award__laurel--l" src="Assets/slides/laurel.svg" alt="" /><span class="award__txt"><span class="award__title">Best Broker in Trading Technology</span><span class="award__sub">Wealth Expo Peru 2025</span></span><img class="award__laurel" src="Assets/slides/laurel.svg" alt="" /></div>
+            </div>
+           </section>
+
+          </div><!-- /track -->
+         </div><!-- /slides -->
+        </div><!-- /left__mid -->
 
         <!-- bottom: carousel + FAQ -->
         <div class="left__bot" data-reveal style="--d:.60s">
