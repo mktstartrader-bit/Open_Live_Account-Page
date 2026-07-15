@@ -334,18 +334,61 @@ i { color: var(--royal); font-style: normal; font-weight: inherit; }
 .alt a { text-decoration: none; font-size: 12px; color: rgba(28, 31, 42, 0.75); }
 
 /* ==================== RESPONSIVE ==================== */
+
+/* ---- Tablet & below: stack the two panels ---- */
 @media (max-width: 1200px) {
   .page { flex-direction: column; }
   .left { flex: none; width: 100%; }
-  .left__inner { min-height: 0; padding: 40px 34px; }
-  .left__mid { flex: none; padding: 48px 0 36px; }
-  .left__bot { margin-top: 8px; }
-  .right { padding: 40px 24px; }
-  .lang { position: static; align-self: flex-end; margin-bottom: 16px; }
-  .right { flex-direction: column; }
+  .left__inner { min-height: 0; padding: 40px 40px 32px; }
+  .left__mid { flex: none; padding: 44px 0 32px; }
+  .left__bot { margin-top: 0; }
+  .right {
+    flex: none;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 26px 24px 44px;
+  }
+  .lang { position: static; align-self: flex-end; margin-bottom: 14px; }
+  .card { width: 100%; max-width: 480px; margin: 0 auto; }
 }
-@media (max-width: 560px) {
+
+/* ---- Phones ---- */
+@media (max-width: 640px) {
+  .left__inner { padding: 30px 22px 26px; }
+  .left__top { flex-wrap: wrap; gap: 14px 18px; }
+  .logo-startrader { height: 26px; }
+  .logo-nba { height: 34px; }
+  .logo-porsche { height: 23px; }
+  .partners { gap: 16px; }
+  .lead { font-size: 18px; }
+  .lead__sub { font-size: 13px; line-height: 20px; }
+  .left__mid { padding: 32px 0 26px; }
+  .stats { gap: 4px; }
+  .stat { padding: 15px 20px; }
+  .stats__hl { left: 8px; right: 8px; }
+  /* carousel left, FAQ right — simple row, no absolute positioning */
+  .left__bot { justify-content: space-between; }
+  .faq { position: static; }
   .entity { grid-template-columns: 1fr 1fr; }
-  .card { padding: 22px 20px 24px; }
-  .left__top { flex-wrap: wrap; gap: 18px; }
+  .card { padding: 22px 18px 24px; }
+}
+
+/* ---- Small phones ---- */
+@media (max-width: 400px) {
+  .left__inner { padding: 26px 16px 22px; }
+  .partners { gap: 12px; }
+  .logo-startrader { height: 24px; }
+  .logo-porsche { height: 21px; }
+  .stat { padding: 13px 14px; gap: 12px; }
+  .stat__body h3 { font-size: 15px; }
+  .stat__body p { font-size: 13px; }
+  .entity { grid-template-columns: 1fr; gap: 4px; }
+  .faq { font-size: 11px; gap: 6px; }
+  .faq__ico { width: 17px; height: 17px; }
+  /* keep the email/phone tab labels on one line */
+  .mtab { font-size: 11px; gap: 6px; }
+  .mtab span { white-space: nowrap; }
+  .mtab__ico { width: 18px; height: 18px; }
+  .card { padding: 22px 14px 22px; }
 }
