@@ -1,0 +1,143 @@
+/* ============================================================
+   STARTRADER — Open Live Account · motion layer
+   Tasteful, smooth micro-interactions layered over styles.css.
+   ============================================================ */
+
+:root {
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+/* ---------- 1. entrance reveal (also scroll-reveal on mobile) ---------- */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity .6s var(--ease-out), transform .7s var(--ease-out);
+  transition-delay: var(--d, 0s);
+  will-change: opacity, transform;
+}
+.js [data-reveal].in { opacity: 1; transform: none; }
+
+/* ---------- 2. method toggle — sliding white pill ---------- */
+.method__glider {
+  position: absolute; top: 0; left: 0; height: 35px;
+  background: #fff; border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(20, 30, 60, 0.10);
+  transform: translate3d(var(--gx, 5px), var(--gy, 5px), 0);
+  transition: transform .45s var(--ease-spring), width .3s var(--ease-out);
+  z-index: 0; opacity: 0;
+}
+.method__glider.ready { opacity: 1; }
+.mtab, .mtab__ico { transition: color .25s var(--ease-out); }
+.mtab:not(.is-active):hover .mtab__ico { color: var(--royal); }
+
+/* ---------- 3. fields ---------- */
+.field input, .field select {
+  transition: border-color .2s var(--ease-out), background .2s var(--ease-out), box-shadow .2s var(--ease-out);
+}
+.field input:focus, .field select:focus {
+  border-color: var(--royal);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(0, 71, 187, 0.10);
+}
+/* field icons: change colour on hover AND focus */
+.field__ico { transition: color .2s var(--ease-out), transform .3s var(--ease-spring); }
+.field:hover .field__ico,
+.field:focus-within .field__ico { color: var(--royal); }
+.field:focus-within .field__ico { transform: translateY(-50%) scale(1.08); }
+.field__label { transition: opacity .18s var(--ease-out), transform .25s var(--ease-out); }
+.field input:focus ~ .field__label { transform: translateY(-50%) translateX(4px); }
+.field__eye { transition: color .2s var(--ease-out), background .2s var(--ease-out); }
+.field__eye:hover { color: var(--royal); background: rgba(0, 71, 187, 0.07); }
+.field--select::after {
+  content: ""; position: absolute; right: 16px; top: 50%;
+  width: 7px; height: 7px; border-right: 2px solid var(--ico); border-bottom: 2px solid var(--ico);
+  transform: translateY(-70%) rotate(45deg);
+  transition: transform .3s var(--ease-spring), border-color .2s var(--ease-out);
+  pointer-events: none;
+}
+.field--select:focus-within::after { border-color: var(--royal); transform: translateY(-30%) rotate(225deg); }
+
+/* ---------- 4. checkboxes ---------- */
+.box { transition: background .2s var(--ease-out), border-color .2s var(--ease-out), box-shadow .2s var(--ease-out); }
+.check:hover .box { border-color: rgba(0, 71, 187, 0.4); }
+.check input:checked + .box::after { animation: checkPop .3s var(--ease-spring) both; }
+@keyframes checkPop {
+  0%   { opacity: 0; transform: rotate(45deg) scale(0); }
+  60%  { opacity: 1; }
+  100% { opacity: 1; transform: rotate(45deg) scale(1); }
+}
+
+/* ---------- 5. carousel dots — the white bar glides between points ---------- */
+.cdot::before { transition: width .5s var(--ease-spring), background .35s var(--ease-out); }
+.cdot:not(.is-active):hover::before { background: rgba(255, 255, 255, 0.9); width: 8px; }
+
+/* ---------- 6. stat rows — sliding white highlight + colour swap ---------- */
+.stats__hl { transition: transform .45s var(--ease-spring), height .35s var(--ease-out); }
+.stat__ico { transition: color .3s var(--ease-out), transform .35s var(--ease-spring); }
+.stat.is-hl .stat__ico { transform: scale(1.06); }
+.stat__body h3,
+.stat__body h3 b.accent,
+.stat__body p { transition: color .3s var(--ease-out); }
+
+/* ---------- 7. logos ---------- */
+.logo-nba, .logo-porsche, .logo-startrader { transition: transform .35s var(--ease-spring), opacity .25s var(--ease-out); }
+.logo-nba:hover, .logo-porsche:hover { transform: translateY(-2px) scale(1.04); }
+.logo-startrader:hover { opacity: .85; }
+
+/* ---------- 8. create button ---------- */
+.submit {
+  transition: transform .25s var(--ease-out), box-shadow .3s var(--ease-out), filter .25s var(--ease-out);
+  box-shadow: 0 10px 22px -13px rgba(0, 71, 187, 0.6);
+}
+.submit:hover { transform: translateY(-1px); box-shadow: 0 16px 30px -14px rgba(0, 71, 187, 0.6); filter: brightness(1.05); }
+.submit:active { transform: translateY(0) scale(.99); }
+.submit__label, .submit__spinner, .submit__check { transition: opacity .25s var(--ease-out), transform .3s var(--ease-out); }
+
+.submit__sheen {
+  position: absolute; top: 0; left: -60%; width: 45%; height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: skewX(-18deg); pointer-events: none;
+}
+.submit:hover .submit__sheen { animation: sheen .9s var(--ease-out); }
+@keyframes sheen { to { left: 130%; } }
+
+.submit .ripple {
+  position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.4);
+  transform: scale(0); pointer-events: none; animation: ripple .6s var(--ease-out) forwards;
+}
+@keyframes ripple { to { transform: scale(2.6); opacity: 0; } }
+
+.submit__spinner {
+  position: absolute; left: 50%; top: 50%; width: 19px; height: 19px; margin: -9.5px 0 0 -9.5px;
+  border: 2.5px solid rgba(255, 255, 255, 0.35); border-top-color: #fff; border-radius: 50%;
+  opacity: 0; animation: spin .7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.submit__check { position: absolute; left: 50%; top: 50%; width: 20px; height: 20px; margin: -10px 0 0 -10px; opacity: 0; transform: scale(.4); }
+
+.submit.is-loading { pointer-events: none; }
+.submit.is-loading .submit__label { opacity: 0; }
+.submit.is-loading .submit__spinner { opacity: 1; }
+.submit.is-success { pointer-events: none; background: linear-gradient(90deg, #0a8a5f, #0f9d63); }
+.submit.is-success .submit__label, .submit.is-success .submit__spinner { opacity: 0; }
+.submit.is-success .submit__check { opacity: 1; transform: scale(1); }
+
+/* ---------- 9. links — sliding underline ---------- */
+.alt a, .faq__txt {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1.5px; background-position: 0 100%; background-repeat: no-repeat;
+  transition: background-size .3s var(--ease-out), color .2s var(--ease-out);
+}
+.alt a:hover, .faq:hover .faq__txt { background-size: 100% 1.5px; }
+.alt__practice:hover { color: var(--royal); }
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .method__glider { opacity: 1; }
+  *, *::before, *::after {
+    animation-duration: .001ms !important; animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+}

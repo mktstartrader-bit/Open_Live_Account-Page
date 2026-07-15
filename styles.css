@@ -1,0 +1,351 @@
+:root {
+  /* STARTRADER brand palette (verified against Figma node 1:163) */
+  --charcoal: #1c1f2a;      /* primary ink */
+  --deep-blue: #001489;
+  --royal: #0047bb;         /* accent + required asterisks */
+  --blue-gray: #dae3ed;
+  --gray: #50555b;
+
+  --btn-grad: linear-gradient(90deg, #0047bb 0%, #001489 100%);
+  --field-bg: rgba(218, 227, 237, 0.05);
+  --field-border: rgba(28, 31, 42, 0.07);
+  --ico: #767c86;           /* muted form-field icons */
+  --label: #71777f;         /* placeholder text */
+
+  --field-h: 45px;
+  --radius: 10px;
+  --card-radius: 30px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--charcoal);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* required asterisk — royal blue, per design */
+i { color: var(--royal); font-style: normal; font-weight: inherit; }
+
+.page {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ==================== LEFT / BRAND (650px) ==================== */
+.left {
+  position: relative;
+  flex: 0 0 700px;
+  width: 700px;
+  overflow: hidden;
+  background: #0a2a6b;
+  color: #fff;
+}
+.left__bg {
+  position: absolute;
+  inset: 0;
+  background: url("Assets/Images/login-bg.png") center / cover no-repeat;
+  z-index: 0;
+}
+.left__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 100vh;
+  padding: 44px 50px 46px;
+}
+
+/* --- top row: logo + partner logos --- */
+.left__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.logo-startrader { height: 30px; width: auto; display: block; }
+.partners { display: flex; align-items: center; gap: 26px; }
+.logo-nba { height: 40px; width: auto; display: block; }
+.logo-porsche { height: 27px; width: auto; display: block; }
+
+/* --- middle: numbers (vertically centred in the panel, text stays left) --- */
+.left__mid {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 28px 0;
+}
+.lead {
+  margin: 0 0 8px;
+  font-size: 20px; font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.lead__sub {
+  margin: 0 0 26px;
+  max-width: 519px;
+  font-size: 14px; font-weight: 400; line-height: 22px;
+  color: var(--blue-gray);
+}
+
+.stats {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: var(--card-radius);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+}
+/* the sliding white highlight (JS positions it under the active row) */
+.stats__hl {
+  position: absolute;
+  left: 10px; right: 10px; top: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #fff;
+  border-radius: 90px;
+  box-shadow: 0 4px 54px 10px rgba(218, 227, 237, 0.15);
+  z-index: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+.stats__hl.ready { opacity: 1; }
+
+.stat {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 17px 30px;
+  cursor: default;
+}
+.stat__ico { flex: 0 0 24px; width: 24px; height: 24px; color: #fff; }
+.stat__ico svg { width: 100%; height: 100%; display: block; }
+.stat__body h3 { margin: 0 0 5px; font-size: 16px; font-weight: 400; color: #fff; line-height: 1; }
+.stat__body h3 b { font-weight: 500; }
+.stat__body h3 b.accent { color: #fff; }
+.stat__body p { margin: 0; font-size: 14px; font-weight: 400; color: rgba(255, 255, 255, 0.92); line-height: 1.2; }
+
+/* active row (the one under the white highlight) */
+.stat.is-hl .stat__ico { color: var(--royal); }
+.stat.is-hl .stat__body h3 { color: var(--charcoal); }
+.stat.is-hl .stat__body h3 b.accent { color: var(--royal); }
+.stat.is-hl .stat__body p { color: rgba(28, 31, 42, 0.7); }
+
+/* --- bottom: carousel + faq --- */
+.left__bot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 24px;
+}
+/* larger, easy-to-hit targets; the visible bar/dot is a ::before so the
+   30px active bar can glide between points */
+.carousel { display: flex; align-items: center; gap: 3px; }
+.cdot {
+  height: 18px; padding: 0 3px; border: 0; background: transparent;
+  cursor: pointer; display: inline-flex; align-items: center;
+}
+.cdot::before {
+  content: ""; display: block;
+  width: 5px; height: 5px; border-radius: 40px;
+  background: rgba(255, 255, 255, 0.45);
+}
+.cdot.is-active::before { width: 30px; background: #fff; }
+
+.faq {
+  position: absolute;
+  right: 0;
+  display: inline-flex; align-items: center; gap: 8px;
+  color: #fff; text-decoration: none;
+  font-size: 12px; font-weight: 400;
+}
+.faq__ico { width: 20px; height: 20px; display: block; }
+
+/* ==================== RIGHT / FORM ==================== */
+.right {
+  position: relative;
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  background: linear-gradient(217.97deg, #dae3ed 24.45%, #ffffff 77.63%);
+}
+.lang {
+  position: absolute; top: 31px; right: 44px;
+  display: inline-flex; align-items: center; gap: 7px;
+  color: var(--charcoal); font-size: 12px; font-weight: 400;
+}
+.lang__ico { width: 18px; height: 18px; color: var(--royal); display: block; }
+.lang__ico svg { width: 100%; height: 100%; display: block; }
+
+.card {
+  width: 500px; max-width: 100%;
+  background: #fff;
+  border-radius: var(--card-radius);
+  padding: 26px 30px 30px;
+  box-shadow: 0 8px 24px 10px rgba(232, 232, 232, 0.2);
+}
+.card__title {
+  text-align: center;
+  margin: 4px 0 20px;
+  font-size: 20px; font-weight: 500; color: var(--charcoal);
+  letter-spacing: -0.01em;
+}
+
+/* --- method toggle --- */
+.method {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  height: var(--field-h);
+  padding: 5px;
+  margin-bottom: 15px;
+  background: rgba(218, 227, 237, 0.5);
+  border: 1px solid var(--field-border);
+  border-radius: var(--radius);
+}
+.mtab {
+  position: relative; z-index: 1;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  border: 0; border-radius: 8px; background: transparent;
+  color: var(--gray); font: inherit; font-size: 12px; font-weight: 400;
+  cursor: pointer;
+}
+.mtab__ico { width: 20px; height: 20px; color: var(--ico); display: inline-flex; }
+.mtab__ico svg { width: 100%; height: 100%; display: block; }
+.mtab.is-active { color: var(--charcoal); }
+.mtab.is-active .mtab__ico { color: var(--gray); }
+
+/* --- fields --- */
+.field {
+  position: relative;
+  display: block;
+  margin-bottom: 15px;
+}
+.field__ico {
+  position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
+  width: 20px; height: 20px; color: var(--ico);
+  pointer-events: none; z-index: 2;
+}
+.field__ico svg { width: 100%; height: 100%; display: block; }
+
+.field input,
+.field select {
+  width: 100%;
+  height: var(--field-h);
+  padding: 0 16px 0 44px;
+  font: inherit; font-size: 12px; color: var(--charcoal);
+  background: var(--field-bg);
+  border: 1px solid var(--field-border);
+  border-radius: var(--radius);
+  outline: none;
+}
+.field select { appearance: none; cursor: pointer; }
+.field--select select,
+.field--pass input { padding-right: 40px; }
+
+.field__label {
+  position: absolute; left: 44px; top: 50%; transform: translateY(-50%);
+  font-size: 12px; color: var(--label); pointer-events: none; z-index: 1;
+}
+/* hide placeholder-label when focused or filled */
+.field input:focus ~ .field__label,
+.field input:not(:placeholder-shown) ~ .field__label,
+.field.filled .field__label { opacity: 0; }
+
+/* identity icon swap (email <-> phone) driven by form[data-method] */
+.field__ico .ico-phone { display: none; }
+.card[data-method="phone"] .field--identity .ico-email { display: none; }
+.card[data-method="phone"] .field--identity .ico-phone { display: block; }
+
+/* password reveal */
+.field__eye {
+  position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border: 0; background: transparent; color: var(--ico); cursor: pointer;
+  border-radius: 8px; z-index: 3;
+}
+.field__eye svg { width: 18px; height: 18px; }
+.field__eye .eye-off { display: none; }
+.field__eye.is-on .eye-open { display: none; }
+.field__eye.is-on .eye-off { display: block; }
+
+/* --- checkboxes --- */
+.check {
+  display: flex; align-items: flex-start; gap: 9px;
+  font-size: 12px; line-height: 20px; color: var(--charcoal);
+  cursor: pointer; user-select: none;
+}
+.check input { position: absolute; opacity: 0; width: 0; height: 0; }
+.box {
+  flex: 0 0 20px; width: 20px; height: 20px;
+  border: 1px solid var(--field-border); border-radius: 5px;
+  background: rgba(218, 227, 237, 0.04);
+  position: relative;
+}
+.check input:checked + .box { background: var(--royal); border-color: var(--royal); }
+.check input:checked + .box::after {
+  content: ""; position: absolute; left: 6px; top: 2px;
+  width: 5px; height: 9px; border: solid #fff; border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.check input:focus-visible + .box { box-shadow: 0 0 0 3px rgba(0, 71, 187, 0.25); }
+.check__txt { flex: 1; }
+.check__txt b { font-weight: 500; }
+
+.entity {
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.entity .check { align-items: center; }
+.check--wide { margin-bottom: 11px; }
+
+/* --- create button --- */
+.submit {
+  position: relative;
+  width: 100%; height: 45px; margin-top: 8px;
+  border: 0; border-radius: var(--radius);
+  background: var(--btn-grad); color: #fff;
+  font: inherit; font-size: 15px; font-weight: 500;
+  cursor: pointer; overflow: hidden;
+}
+
+/* --- alt actions --- */
+.alt {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 20px; padding: 0 8px;
+}
+.alt a { text-decoration: none; font-size: 12px; color: rgba(28, 31, 42, 0.75); }
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 1200px) {
+  .page { flex-direction: column; }
+  .left { flex: none; width: 100%; }
+  .left__inner { min-height: 0; padding: 40px 34px; }
+  .left__mid { flex: none; padding: 48px 0 36px; }
+  .left__bot { margin-top: 8px; }
+  .right { padding: 40px 24px; }
+  .lang { position: static; align-self: flex-end; margin-bottom: 16px; }
+  .right { flex-direction: column; }
+}
+@media (max-width: 560px) {
+  .entity { grid-template-columns: 1fr 1fr; }
+  .card { padding: 22px 20px 24px; }
+  .left__top { flex-wrap: wrap; gap: 18px; }
+}
