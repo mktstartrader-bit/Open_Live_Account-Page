@@ -44,7 +44,13 @@ i { color: var(--royal); font-style: normal; font-weight: inherit; }
   overflow: hidden;
   background: #0a2a6b;
   color: #fff;
+  cursor: grab;
+  touch-action: pan-y;              /* let JS handle horizontal swipe, keep vertical scroll */
+  -webkit-user-select: none;
+  user-select: none;
 }
+.left.dragging { cursor: grabbing; }
+.left a, .cdot { cursor: pointer; }
 .left__bg {
   position: absolute;
   inset: 0;
@@ -147,7 +153,7 @@ i { color: var(--royal); font-style: normal; font-weight: inherit; }
 .slides { width: 100%; min-width: 0; overflow: hidden; }
 .track {
   display: flex;
-  transform: translateX(calc(var(--i, 0) * -100%));
+  transform: translateX(calc(var(--i, 0) * -100% + var(--drag, 0px)));
 }
 .slide {
   flex: 0 0 100%;

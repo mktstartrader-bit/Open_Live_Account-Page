@@ -117,14 +117,54 @@
       d.addEventListener('focus', function () { show(n); });
     });
 
-    // click / tap anywhere on the blue panel stops the slider (resumes when idle)
+    // ----- swipe / drag anywhere on the blue panel to slide -----
     var panel = $('.left');
-    if (panel) panel.addEventListener('pointerdown', pauseIdle);
-    // desktop nicety: pause while reading the slide content, resume on leave
     var slidesEl = $('.slides');
+    var dragging = false, startX = 0, startY = 0, dx = 0, slideW = 1, decided = false;
+
+    function onDown(e) {
+      if (e.button && e.button !== 0) return;      /* primary button / touch only */
+      dragging = true; decided = false;
+      startX = e.clientX; startY = e.clientY; dx = 0;
+      slideW = (slidesEl || panel).getBoundingClientRect().width || 1;
+      stop(); clearTimeout(resumeT);               /* pause while interacting */
+    }
+    function onMove(e) {
+      if (!dragging) return;
+      dx = e.clientX - startX;
+      // decide horizontal vs vertical once, so vertical page-scroll isn't hijacked
+      if (!decided) {
+        if (Math.abs(dx) < 6 && Math.abs(e.clientY - startY) < 6) return;
+        decided = true;
+        if (Math.abs(e.clientY - startY) > Math.abs(dx)) { dragging = false; return; }
+        panel.classList.add('dragging'); track.classList.add('dragging');
+      }
+      var d = dx;
+      if ((current === 0 && d > 0) || (current === dots.length - 1 && d < 0)) d *= 0.32; /* rubber-band at ends */
+      track.style.setProperty('--drag', d + 'px');
+    }
+    function onUp() {
+      if (!dragging) { panel.classList.remove('dragging'); track.classList.remove('dragging'); return; }
+      dragging = false;
+      panel.classList.remove('dragging'); track.classList.remove('dragging');
+      track.style.setProperty('--drag', '0px');
+      if (Math.abs(dx) > slideW * 0.15) {          /* moved far enough -> change slide */
+        var t = Math.max(0, Math.min(dots.length - 1, current + (dx < 0 ? 1 : -1)));
+        show(t);
+      }
+      pauseIdle();
+      dx = 0;
+    }
+    if (panel) {
+      panel.addEventListener('pointerdown', onDown);
+      window.addEventListener('pointermove', onMove, { passive: true });
+      window.addEventListener('pointerup', onUp);
+      window.addEventListener('pointercancel', onUp);
+    }
+    // desktop nicety: pause while reading the slide content, resume on leave
     if (slidesEl) {
       slidesEl.addEventListener('mouseenter', stop);
-      slidesEl.addEventListener('mouseleave', function () { clearTimeout(resumeT); play(); });
+      slidesEl.addEventListener('mouseleave', function () { if (!dragging) { clearTimeout(resumeT); play(); } });
     }
 
     var forced = new URLSearchParams(location.search).get('s');

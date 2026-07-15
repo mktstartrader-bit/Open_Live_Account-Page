@@ -70,6 +70,7 @@
 
 /* ---------- 5. carousel: sliding track + dots ---------- */
 .track { transition: transform .6s var(--ease-out); }
+.track.dragging { transition: none; }   /* follow the finger 1:1 while dragging */
 .cdot::before { transition: width .5s var(--ease-spring), background .35s var(--ease-out); }
 .cdot:not(.is-active):hover::before { background: rgba(255, 255, 255, 0.9); width: 8px; }
 
