@@ -73,6 +73,62 @@
 .cdot::before { transition: width .5s var(--ease-spring), background .35s var(--ease-out); }
 .cdot:not(.is-active):hover::before { background: rgba(255, 255, 255, 0.9); width: 8px; }
 
+/* ---------- per-slide entrance micro-interactions ----------
+   Play each time a slide becomes active (re-runs on every carousel visit).
+   Opacity persists (both) but transform reverts after (backwards) so the
+   hover lifts below keep working once the entrance finishes. */
+@keyframes slFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slRise { from { transform: translateY(18px); } to { transform: translateY(0); } }
+@keyframes slPop  { from { transform: scale(.82); }        to { transform: scale(1); } }
+
+.slide.is-active .stat,
+.slide.is-active .award {
+  animation: slFade .5s var(--ease-out) var(--dl, 0s) both,
+             slRise .6s var(--ease-out) var(--dl, 0s) backwards;
+}
+.slide.is-active .ticker,
+.slide.is-active .lic {
+  animation: slFade .5s var(--ease-out) var(--dl, 0s) both,
+             slPop .6s var(--ease-spring) var(--dl, 0s) backwards;
+}
+.slide.is-active .appviz__phone { animation: slFade .65s var(--ease-out) .08s both; }
+.slide.is-active .lead        { animation: slFade .5s var(--ease-out) both, slRise .55s var(--ease-out) backwards; }
+.slide.is-active .lead__sub   { animation: slFade .5s var(--ease-out) .06s both, slRise .55s var(--ease-out) .06s backwards; }
+
+/* stagger */
+.slide.is-active .stat:nth-of-type(1) { --dl: .14s; }
+.slide.is-active .stat:nth-of-type(2) { --dl: .24s; }
+.slide.is-active .stat:nth-of-type(3) { --dl: .34s; }
+.slide.is-active .ticker--a { --dl: .20s; }
+.slide.is-active .ticker--b { --dl: .34s; }
+.slide.is-active .licenses .lic-row:nth-child(1) .lic { --dl: .16s; }
+.slide.is-active .licenses .lic-row:nth-child(2) .lic { --dl: .26s; }
+.slide.is-active .licenses .lic-row:nth-child(3) .lic { --dl: .36s; }
+.slide.is-active .awards .award:nth-child(1) { --dl: .10s; }
+.slide.is-active .awards .award:nth-child(2) { --dl: .15s; }
+.slide.is-active .awards .award:nth-child(3) { --dl: .20s; }
+.slide.is-active .awards .award:nth-child(4) { --dl: .25s; }
+.slide.is-active .awards .award:nth-child(5) { --dl: .30s; }
+.slide.is-active .awards .award:nth-child(6) { --dl: .35s; }
+.slide.is-active .awards .award:nth-child(7) { --dl: .40s; }
+.slide.is-active .awards .award:nth-child(8) { --dl: .45s; }
+.slide.is-active .awards .award:nth-child(9) { --dl: .50s; }
+
+/* hover micro-interactions on slide cards */
+.lic, .award { transition: transform .25s var(--ease-spring), box-shadow .25s var(--ease-out); }
+.lic:hover   { transform: translateY(-3px); box-shadow: 0 9px 24px rgba(13, 13, 75, 0.18); }
+.award:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(4, 15, 60, 0.20); }
+.ticker { transition: transform .3s var(--ease-out), box-shadow .3s var(--ease-out); }
+.ticker:hover { transform: translateY(-4px); box-shadow: 0 10px 40px 7px rgba(218, 227, 237, 0.4); }
+.lic b { transition: color .2s var(--ease-out); }
+
+@media (prefers-reduced-motion: reduce) {
+  .slide .stat, .slide .ticker, .slide .lic, .slide .award,
+  .slide .appviz__phone, .slide .lead, .slide .lead__sub {
+    animation: none !important; opacity: 1 !important;
+  }
+}
+
 /* ---------- 6. stat rows — sliding white highlight + colour swap ---------- */
 .stats__hl { transition: transform .45s var(--ease-spring), height .35s var(--ease-out); }
 .stat__ico { transition: color .3s var(--ease-out), transform .35s var(--ease-spring); }
